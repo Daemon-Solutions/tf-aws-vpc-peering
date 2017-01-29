@@ -1,10 +1,10 @@
 # VPC Peering Datasources
 
-data "terraform_remote_state" "management_remote_state" {
+data "terraform_remote_state" "destination_remote_state" {
   backend = "s3"
   config {
-    bucket    = "${var.management_tfstate_bucket}"
-    key       = "${var.management_tfstate_file}"
+    bucket    = "${var.destination_tfstate_bucket}"
+    key       = "${var.destination_tfstate_file}"
     region    = "${var.aws_region}"
   }
 }

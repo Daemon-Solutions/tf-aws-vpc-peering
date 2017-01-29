@@ -5,14 +5,14 @@ variable "aws_region" {}
 # VPC Peering Requester VPC ID
 variable "requester_vpc_id" {}
 
-# VPC Peer Management AWS Account ID
-variable "management_account_id" {}
+# VPC Peer Destination AWS Account ID
+variable "destination_account_id" {}
 
-# VPC Peer Management TFState Bucket
-variable "management_tfstate_bucket" {}
+# VPC Peer Destination TFState Bucket
+variable "destination_tfstate_bucket" {}
 
-# VPC Peer Management TFState File
-variable "management_tfstate_file" {}
+# VPC Peer Destination TFState File
+variable "destination_tfstate_file" {}
 
 # Tags
 variable "peering_name_tag" {}
