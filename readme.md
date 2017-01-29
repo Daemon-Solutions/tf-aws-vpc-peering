@@ -3,7 +3,7 @@ tf-aws-vpc-peering
 
 AWS VPC Peering - Terraform Module
 
-The module creates a VPC peering connection and associated routes for the requesting account to an alternate peer AWS Account, typically a Managament AWS account.
+The module creates a VPC peering connection and associated routes for the requesting account to an alternate peer AWS Account, typically a Management AWS account.
 
 The VPC ID of the peer is determined via the peers tfstate file on S3 utilising Terraform remote_state.
 
@@ -14,8 +14,8 @@ Resources
 
 This module will create the following resources:
 
-- VPC Peering Connection to Management VPC
-- Routes to Management VPC for public and private subnets
+- VPC Peering Connection to Destination VPC
+- Routes to Destination VPC for public and private subnets
 
 Limitations
 -----------
@@ -34,10 +34,10 @@ module "vpc-peering" {
 
   aws_region                  = "${var.aws_region}"
   requester_vpc_id            = "${module.vpc.vpc_id}"
-  management_account_id       = "${var.management_account_id}"
-  management_tfstate_bucket   = "${var.management_tfstate_bucket}"
-  management_tfstate_file     = "${var.management_tfstate_file}"
-  peering_name_tag            = "${var.envtype}-to-management-peering"
+  destination_account_id      = "${var.destination_account_id}"
+  destination_tfstate_bucket  = "${var.destination_tfstate_bucket}"
+  destination_tfstate_file    = "${var.destination_tfstate_file}"
+  peering_name_tag            = "${var.envtype}-to-destination-peering"
   public_route_tables         = "${module.vpc.public_route_tables}"
   private_route_tables        = "${module.vpc.private_route_tables}"
   number_of_route_tables      = "${length(var.private_subnets) + 1}"
@@ -49,9 +49,9 @@ Variables
 
 - `aws_region`                - AWS region
 - `requester_vpc_id`          - the VPC ID of the account requesting peering
-- `management_account_id`     - the management AWS account ID
-- `management_tfstate_bucket` - the management AWS tfstate S3 bucket
-- `management_tfstate_file`   - the management AWS tfstate file
+- `destination_account_id`    - the destination AWS account ID
+- `destination_tfstate_bucket`- the destination AWS tfstate S3 bucket
+- `destination_tfstate_file`  - the destination AWS tfstate file
 - `peering_name_tag`          - the tag name for VPC peering connection
 - `public_route_tables`       - the public route table IDs for requesting account
 - `private_route_tables`      - the private route table IDs for requesting account
