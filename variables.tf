@@ -1,35 +1,54 @@
 # VPC Peering Variables
+variable "aws_region" {
+  description = "The AWS region in which to create the VPC peering connection"
+  type = "string"
+  default = "eu-west-1"
+}
 
-variable "aws_region" {}
+variable "requester_vpc_id" {
+  description = "The VPC ID for the origin of the peering request"
+  type = "string"
+}
 
-# VPC Peering Requester VPC ID
-variable "requester_vpc_id" {}
+variable "destination_account_id" {
+  description = "The AWS account ID for the destination VPC for this peering connection"
+  type = "string"
+}
 
-# VPC Peer Destination AWS Account ID
-variable "destination_account_id" {}
+variable "destination_tfstate_bucket" {
+  description = "The name of the terraform state bucket in the destination account"
+  type = "string"
+}
 
-# VPC Peer Destination TFState Bucket
-variable "destination_tfstate_bucket" {}
-
-# VPC Peer Destination TFState File
-variable "destination_tfstate_file" {}
+variable "destination_tfstate_file" {
+  description = "The name of the terraform state file in the destination account"
+  type = "string"
+}
 
 # Tags
-variable "peering_name_tag" {}
+variable "peering_name_tag" {
+  description = "The value for the 'Name' tag which will be placed on the aws_vpc_peering_connection object"
+  type = "string"
+}
 
-# Public Route Table IDs
+# Route Table IDs
 variable "public_route_tables" {
+  description = "List of public routing tables to create the aws_route object from"
   type = "list"
 }
 
-# Private Route Table IDs
 variable "private_route_tables" {
+  description = "List of private routing tables to create the aws_route object from"
   type = "list"
 }
 
-# Used by count to avoid interpolation issues of generating dynamic data
-# and subsequent cycle issues. The variables value is based on the
-# assumption that vpc module only creates one route table for public subnets,
-# which it currently does.
-# Awaiting feature from Terraform or workaround
-variable "number_of_route_tables" {}
+/* number_of_route_tables note
+  Used by count to avoid interpolation issues of generating dynamic data,
+  and subsequent cycle issues. The variable's value is based on the assumption 
+  that VPC module only creates one route table for public subnets, which it 
+  currently does. Awaiting feature or workaround from Terraform.
+*/
+variable "number_of_route_tables" {
+  description = "Count of the number of routing tables. Used to avoid interpolation issues"
+  type = "string"
+}
